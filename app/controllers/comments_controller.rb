@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
+  caches_page :index, if: :cache_params_present?
+
   # GET /comments
   # GET /comments.json
   def index
@@ -73,5 +75,9 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.require(:comment).permit(:article_id, :body)
+    end
+
+    def cache_params_present?
+      params[:cache].present?
     end
 end
