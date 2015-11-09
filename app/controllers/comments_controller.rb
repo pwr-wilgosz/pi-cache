@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
-  caches_page :index, if: :cache_params_present?
+  caches_action :index, if: :cache_params_present?
 
   # GET /comments
   # GET /comments.json
@@ -78,6 +78,7 @@ class CommentsController < ApplicationController
     end
 
     def cache_params_present?
+      expire_page action: :index unless params[:cache]
       params[:cache].present?
     end
 end
