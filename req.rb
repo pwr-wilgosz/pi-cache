@@ -1,5 +1,7 @@
 #!/Users/sebastian/.rvm/rubies/ruby-2.1.1/bin/ruby
 
+# USAGE: ./req.rb 'http://pwr-bad.herokuapp.com/comments?limit=10' 5 '../data-server-cache-bad.csv' true
+
 require 'net/http'
 require 'Benchmark'
 require 'csv'
