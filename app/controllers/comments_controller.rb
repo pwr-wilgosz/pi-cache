@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
-  caches_action :index, if: :cache_params_present?
+  caches_page :index, if: :cache_param
 
   # GET /comments
   # GET /comments.json
@@ -42,6 +42,11 @@ class CommentsController < ApplicationController
     end
   end
 
+  def clear
+    expire_page action: :index
+    redirect_to comments_path(limit: 10)
+  end
+
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
@@ -77,8 +82,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:article_id, :body)
     end
 
-    def cache_params_present?
-      expire_page action: :index unless params[:cache]
-      params[:cache].present?
+    def cache_param
+      params[:cache] == 'true'
     end
 end

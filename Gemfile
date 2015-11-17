@@ -12,7 +12,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 
 gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+# gem 'actionpack-action_caching'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

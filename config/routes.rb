@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :comments
+  resources :comments do
+    get 'clear', on: :collection
+  end
   resources :articles
   root 'articles#index'
   # The priority is based upon order of creation: first created -> highest priority.
