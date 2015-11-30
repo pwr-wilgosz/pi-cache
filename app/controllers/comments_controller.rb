@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_comments, only: :public
   caches_page :index, if: :cache_param
+  caches_action :public, if: :cache_param
 
   # GET /comments
   # GET /comments.json
@@ -10,6 +11,13 @@ class CommentsController < ApplicationController
     scope = params[:fix].present? ? scope.includes(:article) : scope
     scope = scope.limit(params[:limit]) if params[:limit].present?
     @comments = scope
+  end
+
+  def public
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @comments }
+    end
   end
 
   # GET /comments/1
@@ -75,6 +83,10 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+    end
+
+    def set_comments
+      @comments = Comment.all.limit(params[:limit] || 10)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

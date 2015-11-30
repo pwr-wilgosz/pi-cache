@@ -14,7 +14,9 @@
   <tbody>
     <% @comments.each do |comment| %>
       <tr>
-        <td><%= comment.rate %></td>
+        <%= cache([comment.updated_at]) do %>
+          <td><%= comment.rate %></td>
+        <%= end %>
         <td><%= comment.body %></td>
         <td><%= link_to 'Show', comment %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
